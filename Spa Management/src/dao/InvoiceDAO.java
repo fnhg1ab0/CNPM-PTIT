@@ -28,13 +28,28 @@ public class InvoiceDAO extends DAO {
          * @return true if the invoice is added successfully, false otherwise
          */
         public boolean addInvoice(Invoice i) {
+            String checkInvoice = "SELECT * FROM tblInvoice WHERE No = ? AND idSupplier = ?";
             String addInvoice = "INSERT INTO tblInvoice (No, date, tax, paidAmount, idSupplier, idUser) VALUES (?, ?, ?, ?, ?, ?)";
             String addImportedMaterial = "INSERT INTO tblImportedMaterial (quantity, unitPrice, idMaterial, idInvoice) VALUES (?, ?, ?, ?)";
             String getMaterial = "SELECT * FROM tblMaterial WHERE id = ?";
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 con.setAutoCommit(false);
-                PreparedStatement ps = con.prepareStatement(addInvoice, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement ps = con.prepareStatement(checkInvoice);
+                ps.setString(1, i.getNo());
+                ps.setInt(2, i.getSupplier().getId());
+                ResultSet rs = ps.executeQuery();
+                if(rs.next()){
+                    try {
+                        con.rollback();
+                        con.setAutoCommit(true);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return false;
+                }
+
+                ps = con.prepareStatement(addInvoice, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, i.getNo());
                 ps.setString(2, sdf.format(i.getDate()));
                 ps.setDouble(3, i.getTax());
@@ -44,7 +59,7 @@ public class InvoiceDAO extends DAO {
                 ps.executeUpdate();
 
                 // Get the id of the new invoice
-                ResultSet rs = ps.getGeneratedKeys();
+                rs = ps.getGeneratedKeys();
                 if(rs.next()){
                     i.setId(rs.getInt(1));
 

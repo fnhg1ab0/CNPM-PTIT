@@ -476,7 +476,7 @@ public class ConfirmFrm extends javax.swing.JFrame implements ActionListener {
             }
             InvoiceDAO id = new InvoiceDAO();
             if(!id.addInvoice(i)) {
-                JOptionPane.showMessageDialog(this, "Importing failed! Please try again.");
+                JOptionPane.showMessageDialog(this, "Importing failed, the invoice is already in the database or the material is not in the database! Please check again!");
                 return;
             }
             JOptionPane.showMessageDialog(this, "Importing successfully!");

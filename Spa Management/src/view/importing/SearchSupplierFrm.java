@@ -234,7 +234,7 @@ public class SearchSupplierFrm extends javax.swing.JFrame implements ActionListe
                 SupplierDAO sd = new SupplierDAO();
                 suppliers = sd.searchSupplier(name);
                 if(suppliers.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "No supplier found");
+                    JOptionPane.showMessageDialog(this, "The supplier does not found! Please add new supplier or choose another suppler.");
                 } else {
                     DefaultTableModel model = (DefaultTableModel) tblSupplier.getModel();
                     model.setRowCount(0);

@@ -427,7 +427,7 @@ public class SearchMaterialFrm extends javax.swing.JFrame implements ActionListe
             MaterialDAO md = new MaterialDAO();
             material = md.searchMaterial(name);
             if(material.isEmpty()){
-                JOptionPane.showMessageDialog(this, "No material found");
+                JOptionPane.showMessageDialog(this, "The material does not found! Please add new material or choose another material.");
                 return;
             }
             DefaultTableModel model = (DefaultTableModel) tblMaterial.getModel();
