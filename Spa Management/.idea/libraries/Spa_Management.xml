@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Spa_Management">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/Spa_Management.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
