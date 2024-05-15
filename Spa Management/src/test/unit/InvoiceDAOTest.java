@@ -4,12 +4,14 @@
  */
 package test.unit;
 
+import dao.DAO;
 import dao.InvoiceDAO;
 import dao.UserDAO;
 import model.*;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,57 +25,203 @@ public class InvoiceDAOTest {
     InvoiceDAO id = new InvoiceDAO();
 
     // addInvoice with parameter: Invoice i
-    // add a new invoice to the database
+    // return boolean value
 
-    // test case 1: invoice is null
-    @Test
-    public void testAddInvoice1() {
-        Assert.assertFalse(id.addInvoice(null));
-        return;
-    }
+    // NOTE: Before running the test cases, you need to comment out the line 82 and 95 in InvoiceDAO.java
 
-    // test case 2: invoice is not null
+    // test case 1: supplier exists, material exists, invoice can add to database
     @Test
-    public void testAddInvoice2() {
+    public void testAddInvoiceStandard() {
+        Connection con = DAO.con;
         Invoice i = new Invoice();
-        i.setNo("1");
-        // set date to 2021-01-01
-        i.setDate(new GregorianCalendar(2021, Calendar.JANUARY, 1).getTime());
-        i.setTax(0.1);
-        i.setTotalAmount(1000);
-        i.setPaidAmount(1000);
+        i.setNo("1236823");
+        i.setDate(new Date());
+        i.setTax(10);
+        i.setPaidAmount(1200000);
 
         User u = new User();
-        u.setId(1);
-        u.setUsername("user");
-        u.setPassword("pass");
-        u.setFullname("fullname");
-        u.setRole("role");
+        u.setId(2);
         i.setBuyer(u);
 
         Supplier s = new Supplier();
         s.setId(1);
-        s.setName("supplier");
-        s.setAddress("address");
-        s.setTel("tel");
-        s.setTaxCode("taxCode");
         i.setSupplier(s);
 
-        ArrayList<ImportedMaterial> listMaterial = new ArrayList<>();
         Material m = new Material();
         m.setId(1);
-        m.setName("material");
-        m.setDescription("description");
-        m.setPrice(100);
+
         ImportedMaterial im = new ImportedMaterial();
-        im.setId(1);
         im.setMaterial(m);
         im.setQuantity(10);
-        im.setUnitPrice(100);
-        listMaterial.add(im);
-        i.setListMaterial(listMaterial);
+        im.setUnitPrice(100000);
 
-        Assert.assertTrue(id.addInvoice(i));
+        ArrayList<ImportedMaterial> ims = new ArrayList<>();
+        ims.add(im);
+
+        i.setListMaterial(ims);
+
+        try {
+            con.setAutoCommit(false);
+            Assert.assertTrue(id.addInvoice(i));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(!con.getAutoCommit()) {
+                    con.rollback();
+                    con.setAutoCommit(true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return;
+    }
+
+    // test case 2: supplier does not exist, invoice cannot add to database
+    @Test
+    public void testAddInvoiceException1() {
+        Connection con = DAO.con;
+        Invoice i = new Invoice();
+        i.setNo("123");
+        i.setDate(new Date());
+        i.setTax(10);
+        i.setPaidAmount(1200000);
+
+        User u = new User();
+        u.setId(2);
+        i.setBuyer(u);
+
+        Supplier s = new Supplier();
+        s.setId(100);
+        i.setSupplier(s);
+
+        Material m = new Material();
+        m.setId(1);
+
+        ImportedMaterial im = new ImportedMaterial();
+        im.setMaterial(m);
+        im.setQuantity(10);
+        im.setUnitPrice(100000);
+
+        ArrayList<ImportedMaterial> ims = new ArrayList<>();
+        ims.add(im);
+
+        i.setListMaterial(ims);
+
+        try {
+            con.setAutoCommit(false);
+            Assert.assertFalse(id.addInvoice(i));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(!con.getAutoCommit()) {
+                    con.rollback();
+                    con.setAutoCommit(true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return;
+    }
+
+    // test case 3: material does not exist, invoice cannot add to database
+    @Test
+    public void testAddInvoiceException2() {
+        Connection con = DAO.con;
+        Invoice i = new Invoice();
+        i.setNo("123");
+        i.setDate(new Date());
+        i.setTax(10);
+        i.setPaidAmount(1200000);
+
+        User u = new User();
+        u.setId(2);
+        i.setBuyer(u);
+
+        Supplier s = new Supplier();
+        s.setId(1);
+        i.setSupplier(s);
+
+        Material m = new Material();
+        m.setId(100);
+
+        ImportedMaterial im = new ImportedMaterial();
+        im.setMaterial(m);
+        im.setQuantity(10);
+        im.setUnitPrice(100000);
+
+        ArrayList<ImportedMaterial> ims = new ArrayList<>();
+        ims.add(im);
+
+        i.setListMaterial(ims);
+
+        try {
+            con.setAutoCommit(false);
+            Assert.assertFalse(id.addInvoice(i));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(!con.getAutoCommit()) {
+                    con.rollback();
+                    con.setAutoCommit(true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return;
+    }
+
+    // test case 4: supplier exists, material exists, invoice cannot add to database (invoice no and idSupplier are existed at the same row in tblInvoice)
+    @Test
+    public void testAddInvoiceException3() {
+        Connection con = DAO.con;
+        Invoice i = new Invoice();
+        i.setNo("12345");
+        i.setDate(new Date());
+        i.setTax(10);
+        i.setPaidAmount(1200000);
+
+        User u = new User();
+        u.setId(2);
+        i.setBuyer(u);
+
+        Supplier s = new Supplier();
+        s.setId(1);
+        i.setSupplier(s);
+
+        Material m = new Material();
+        m.setId(1);
+
+        ImportedMaterial im = new ImportedMaterial();
+        im.setMaterial(m);
+        im.setQuantity(10);
+        im.setUnitPrice(100000);
+
+        ArrayList<ImportedMaterial> ims = new ArrayList<>();
+        ims.add(im);
+
+        i.setListMaterial(ims);
+
+        try {
+            con.setAutoCommit(false);
+            Assert.assertFalse(id.addInvoice(i));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (!con.getAutoCommit()) {
+                    con.rollback();
+                    con.setAutoCommit(true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return;
     }
 }

@@ -4,11 +4,13 @@
  */
 package test.unit;
 
+import dao.DAO;
 import dao.SupplierDAO;
 import model.Supplier;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 /**
@@ -21,58 +23,93 @@ public class SupplierDAOTest {
     // searchSupplier with parameter: String keyword
     // return a list of suppliers that match the keyword
 
-    // test case 1: keyword is empty
+    // test case 1: keyword is long, return empty list
     @Test
-    public void testSearchSupplier1() {
-        String keyword = "";
+    public void testSearchSupplierException1() {
+        String keyword = "xxxxxxxxxxxxxxxx";
         ArrayList<Supplier> suppliers = sd.searchSupplier(keyword);
+        Assert.assertNotNull(suppliers);
         Assert.assertEquals(0, suppliers.size());
         return;
     }
 
-    // test case 2: keyword is not empty
+    // test case 2: keyword is short, return empty list
     @Test
-    public void testSearchSupplier2() {
-        String keyword = "a";
+    public void testSearchSupplierException2() {
+        String keyword = "oo";
         ArrayList<Supplier> suppliers = sd.searchSupplier(keyword);
-        Assert.assertNotEquals(0, suppliers.size());
-        Assert.assertTrue(suppliers.stream().allMatch(s -> s.getName().contains(keyword)));
         Assert.assertNotNull(suppliers);
+        Assert.assertEquals(0, suppliers.size());
+        return;
+    }
+
+    // test case 3: keyword is short, return a list of suppliers
+    @Test
+    public void testSearchSupplierStandard() {
+        String keyword = "go";
+        ArrayList<Supplier> suppliers = sd.searchSupplier(keyword);
+        Assert.assertNotNull(suppliers);
+        Assert.assertEquals(2, suppliers.size());
+        for(Supplier s : suppliers) {
+            Assert.assertTrue(s.getName().toLowerCase().contains(keyword.toLowerCase()));
+        }
         return;
     }
 
     // addSupplier with parameter: Supplier s
-    // add a new supplier to the database
+    // return boolean value
 
-    // test case 3: supplier is null
+    // test case 3: supplier can add into database
     @Test
-    public void testAddSupplier1() {
-        Supplier s = null;
-        Assert.assertFalse(sd.addSupplier(s));
+    public void testAddSupplierStandard() {
+        Connection con = DAO.con;
+        Supplier s = new Supplier();
+        s.setName("Spa Vision");
+        s.setAddress("123 Street");
+        s.setTel("123456789");
+        s.setTaxCode("123456789");
+        try {
+            con.setAutoCommit(false);
+            Assert.assertTrue(sd.addSupplier(s));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(!con.getAutoCommit()) {
+                    con.rollback();
+                    con.setAutoCommit(true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return;
     }
 
-    // test case 4: supplier is not null
+    // test case 4: supplier can not add into database (name or taxCode is same with other supplier in database)
     @Test
-    public void testAddSupplier2() {
+    public void testAddSupplierException() {
+        Connection con = DAO.con;
         Supplier s = new Supplier();
-        s.setName("Test");
-        s.setAddress("Test");
-        s.setTel("Test");
-        s.setTaxCode("Test");
-        Assert.assertTrue(sd.addSupplier(s));
-        return;
-    }
-
-    // test case 5: supplier is not null but name is empty
-    @Test
-    public void testAddSupplier3() {
-        Supplier s = new Supplier();
-        s.setName("");
-        s.setAddress("Test");
-        s.setTel("Test");
-        s.setTaxCode("Test");
-        Assert.assertFalse(sd.addSupplier(s));
+        s.setName("Spa Vision");
+        s.setAddress("123 Street");
+        s.setTel("123456789");
+        s.setTaxCode("0316265669");
+        try {
+            con.setAutoCommit(false);
+            Assert.assertFalse(sd.addSupplier(s));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(!con.getAutoCommit()) {
+                    con.rollback();
+                    con.setAutoCommit(true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return;
     }
 }

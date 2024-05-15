@@ -31,7 +31,6 @@ public class InvoiceDAO extends DAO {
             String checkInvoice = "SELECT * FROM tblInvoice WHERE No = ? AND idSupplier = ?";
             String addInvoice = "INSERT INTO tblInvoice (No, date, tax, paidAmount, idSupplier, idUser) VALUES (?, ?, ?, ?, ?, ?)";
             String addImportedMaterial = "INSERT INTO tblImportedMaterial (quantity, unitPrice, idMaterial, idInvoice) VALUES (?, ?, ?, ?)";
-            String getMaterial = "SELECT * FROM tblMaterial WHERE id = ?";
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 con.setAutoCommit(false);
@@ -65,19 +64,6 @@ public class InvoiceDAO extends DAO {
 
                     // Add imported materials
                     for (ImportedMaterial im : i.getListMaterial()) {
-                        // check if the material is already in the database
-                        ps = con.prepareStatement(getMaterial);
-                        ps.setInt(1, im.getMaterial().getId());
-                        rs = ps.executeQuery();
-                        if(!rs.next()){
-                            try {
-                                con.rollback();
-                                con.setAutoCommit(true);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            return false;
-                        }
 
                         // insert imported material
                         ps = con.prepareStatement(addImportedMaterial, Statement.RETURN_GENERATED_KEYS);
@@ -92,6 +78,7 @@ public class InvoiceDAO extends DAO {
                             im.setId(rs.getInt(1));
                         }
                     }
+                    // comment below line to keep the data in database because rollback will be called in file unit test
                     con.commit();
                     return true;
                 }
@@ -104,6 +91,7 @@ public class InvoiceDAO extends DAO {
                 e.printStackTrace();
             } finally {
                 try {
+                    // in test mode comment below line to keep the data in database because rollback will be called in file unit test
                     con.setAutoCommit(true);
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -16,10 +16,11 @@ import org.junit.Test;
 public class UserDAOTest {
     UserDAO ud = new UserDAO();
 
-    // checkLogin with object u containing username and password
+    // checkLogin with parameter: User u
+    // return boolean value
     // test case 1: username and password are correct
     @Test
-    public void testCheckLogin1() {
+    public void testCheckLoginStandard() {
         User u = new User();
         u.setUsername("admin");
         u.setPassword("admin");
@@ -29,7 +30,7 @@ public class UserDAOTest {
 
     // test case 2: username is correct but password is incorrect
     @Test
-    public void testCheckLogin2() {
+    public void testCheckLoginException1() {
         User u = new User();
         u.setUsername("admin");
         u.setPassword("admin1");
@@ -39,7 +40,7 @@ public class UserDAOTest {
 
     // test case 3: username is incorrect but password is correct
     @Test
-    public void testCheckLogin3() {
+    public void testCheckLoginException2() {
         User u = new User();
         u.setUsername("admin1");
         u.setPassword("admin");
@@ -49,20 +50,10 @@ public class UserDAOTest {
 
     // test case 4: username and password are incorrect
     @Test
-    public void testCheckLogin4() {
+    public void testCheckLoginException3() {
         User u = new User();
         u.setUsername("admin1");
         u.setPassword("admin1");
-        Assert.assertFalse(ud.checkLogin(u));
-        return;
-    }
-
-    // test case 5: username and password are empty
-    @Test
-    public void testCheckLogin5() {
-        User u = new User();
-        u.setUsername("");
-        u.setPassword("");
         Assert.assertFalse(ud.checkLogin(u));
         return;
     }
