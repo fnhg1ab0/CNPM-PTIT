@@ -247,6 +247,7 @@ public class SearchSupplierFrm extends javax.swing.JFrame implements ActionListe
                                 s.getTaxCode()
                         });
                     }
+                    tblSupplier.setModel(model);
                 }
             }
         } else if(e.getSource() == btnAddSupplier) {

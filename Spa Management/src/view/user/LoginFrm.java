@@ -30,7 +30,7 @@ public class LoginFrm extends javax.swing.JFrame implements ActionListener {
         this.setLayout(null);
 
         // Add action listener to the button
-        btnLogin.addActionListener(this);
+        this.btnLogin.addActionListener(this);
     }
 
     /**

@@ -12,6 +12,8 @@ import model.Material;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -36,6 +38,7 @@ public class SearchMaterialFrm extends javax.swing.JFrame implements ActionListe
         this.getContentPane().setBackground(Color.getHSBColor(106, 52, 50));
         this.setLayout(null);
         this.setSize(900, 810);
+
         this.lblFullname.setText(i.getBuyer() != null ? i.getBuyer().getFullname() : "");
         this.lblRole.setText(i.getBuyer() != null ? i.getBuyer().getRole() : "");
         this.btnSearch.addActionListener(this);
@@ -44,9 +47,9 @@ public class SearchMaterialFrm extends javax.swing.JFrame implements ActionListe
         this.btnDelete.addActionListener(this);
         this.btnAddMaterial.addActionListener(this);
 
-        this.tblMaterial.addMouseListener(new java.awt.event.MouseAdapter() {
+        this.tblMaterial.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            public void mouseClicked(MouseEvent evt) {
                 int row = tblMaterial.rowAtPoint(evt.getPoint());
                 if(row == -1){
                     return;
@@ -440,6 +443,7 @@ public class SearchMaterialFrm extends javax.swing.JFrame implements ActionListe
                         m.getPrice()
                 });
             }
+            tblMaterial.setModel(model);
         } else if (e.getSource() == btnAddMaterial) {
             AddMaterialFrm addMaterialFrm = new AddMaterialFrm();
             addMaterialFrm.setVisible(true);
@@ -473,6 +477,7 @@ public class SearchMaterialFrm extends javax.swing.JFrame implements ActionListe
                             Double.parseDouble(unitPrice),
                             Integer.parseInt(quantity) * Double.parseDouble(unitPrice)
                     });
+                    tblImportedMaterial.setModel(model);
                     ImportedMaterial im = new ImportedMaterial();
                     im.setQuantity(Integer.parseInt(quantity));
                     im.setUnitPrice(Double.parseDouble(unitPrice));

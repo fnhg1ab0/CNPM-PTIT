@@ -30,8 +30,8 @@ public class ManagerHomeFrm extends javax.swing.JFrame implements ActionListener
         this.getContentPane().setBackground(Color.getHSBColor(106, 52, 50));
         this.setLayout(null);
 
-        this.lblFullname.setText(String.valueOf(u.getFullname() == null ? "Nguyen Quang Dang" : u.getFullname()));
-        this.lblRole.setText(String.valueOf(u.getRole() == null ? "Manager" : u.getRole()));
+        this.lblFullname.setText(u.getFullname());
+        this.lblRole.setText(u.getRole());
         
         this.btnImportingManage.addActionListener(this);
         this.btnLogout.addActionListener(this);

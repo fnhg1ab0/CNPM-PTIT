@@ -39,6 +39,7 @@ public class ImportInvoiceFrm extends javax.swing.JFrame implements ActionListen
         this.txtDate.setSize(175, 33);
         this.txtTax.setSize(175, 33);
         this.setLayout(null);
+
         this.lblFullname.setText(u.getFullname());
         this.lblRole.setText(u.getRole());
         this.btnImport.addActionListener(this);

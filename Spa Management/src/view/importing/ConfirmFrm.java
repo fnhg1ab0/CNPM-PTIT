@@ -462,13 +462,14 @@ public class ConfirmFrm extends javax.swing.JFrame implements ActionListener {
                 return;
             }
             double paidAmount = Double.parseDouble(paid);
-            if (paidAmount < i.getTotalAmount()) {
+            double totalAmount = i.getTotalAmount() + i.getTotalAmount() * i.getTax() / 100;
+            if (paidAmount < totalAmount) {
                 JOptionPane.showMessageDialog(this, "The paid amount must be greater than or equal to the total amount!");
                 return;
             }
             i.setPaidAmount(paidAmount);
             DecimalFormat df = new DecimalFormat("#,###");
-            this.lblRemaining.setText(df.format(paidAmount - (i.getTotalAmount() + i.getTotalAmount() * i.getTax() / 100)) + " VNĐ");
+            this.lblRemaining.setText(df.format(paidAmount - totalAmount) + " VNĐ");
         } else if (e.getSource() == btnConfirm) {
             int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to import this invoice?", "Confirm importing", JOptionPane.YES_NO_OPTION);
             if (choice == JOptionPane.NO_OPTION) {
