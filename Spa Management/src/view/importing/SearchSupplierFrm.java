@@ -21,8 +21,8 @@ import java.util.ArrayList;
  * @author Shisui
  */
 public class SearchSupplierFrm extends javax.swing.JFrame implements ActionListener {
-    Invoice i;
-    ArrayList<Supplier> suppliers;
+    private Invoice i;
+    private ArrayList<Supplier> suppliers;
 
     /**
      * Creates new form SearchSupplier

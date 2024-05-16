@@ -23,9 +23,9 @@ import javax.swing.table.DefaultTableModel;
  * @author Shisui
  */
 public class SearchMaterialFrm extends javax.swing.JFrame implements ActionListener {
-    Invoice i;
-    ArrayList<ImportedMaterial> importedMaterial = new ArrayList<>();
-    ArrayList<Material> material;
+    private Invoice i;
+    private ArrayList<ImportedMaterial> importedMaterial = new ArrayList<>();
+    private ArrayList<Material> material;
 
     /**
      * Creates new form SearchMaterial

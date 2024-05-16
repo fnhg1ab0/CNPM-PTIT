@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
  * @author Shisui
  */
 public class ImportingManageFrm extends javax.swing.JFrame implements ActionListener {
-    User u;
+    private User u;
 
     /**
      * Creates new form ImportingManage

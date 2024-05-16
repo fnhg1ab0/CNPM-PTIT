@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
  * @author Shisui
  */
 public class ConfirmFrm extends javax.swing.JFrame implements ActionListener {
-    Invoice i;
+    private Invoice i;
 
     /**
      * Creates new form Confirm

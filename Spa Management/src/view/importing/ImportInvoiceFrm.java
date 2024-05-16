@@ -23,7 +23,7 @@ import javax.swing.*;
  * @author Shisui
  */
 public class ImportInvoiceFrm extends javax.swing.JFrame implements ActionListener {
-    User u;
+    private User u;
 
     /**
      * Creates new form ImportInvoice
