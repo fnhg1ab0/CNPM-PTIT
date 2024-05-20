@@ -3,16 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/documents/PTIT/CNPM/Spa%20Management/src/view/importing/SearchMaterialFrm.java</file>
-            <file>file:/D:/documents/PTIT/CNPM/Spa%20Management/src/view/user/ManagerHomeFrm.java</file>
-            <file>file:/D:/documents/PTIT/CNPM/Spa%20Management/src/view/importing/ConfirmFrm.java</file>
-            <file>file:/D:/documents/PTIT/CNPM/Spa%20Management/src/view/importing/ImportingManageFrm.java</file>
-            <file>file:/D:/documents/PTIT/CNPM/Spa%20Management/src/view/importing/ImportInvoiceFrm.java</file>
-            <file>file:/D:/documents/PTIT/CNPM/Spa%20Management/src/view/importing/SearchSupplierFrm.java</file>
-            <file>file:/D:/documents/PTIT/CNPM/Spa%20Management/src/view/importing/AddMaterialFrm.java</file>
-            <file>file:/D:/documents/PTIT/CNPM/Spa%20Management/src/model/Spa.java</file>
-            <file>file:/D:/documents/PTIT/CNPM/Spa%20Management/src/view/importing/AddSupplierFrm.java</file>
-            <file>file:/D:/documents/PTIT/CNPM/Spa%20Management/src/dao/DAO.java</file>
+            <file>file:/D:/documents/code/git/CNPM-PTIT/Spa%20Management/src/view/importing/ImportingManageFrm.java</file>
+            <file>file:/D:/documents/code/git/CNPM-PTIT/Spa%20Management/src/view/importing/ConfirmFrm.java</file>
+            <file>file:/D:/documents/code/git/CNPM-PTIT/Spa%20Management/src/view/importing/AddMaterialFrm.java</file>
+            <file>file:/D:/documents/code/git/CNPM-PTIT/Spa%20Management/src/view/importing/AddSupplierFrm.java</file>
+            <file>file:/D:/documents/code/git/CNPM-PTIT/Spa%20Management/src/view/importing/ImportInvoiceFrm.java</file>
+            <file>file:/D:/documents/code/git/CNPM-PTIT/Spa%20Management/src/view/importing/SearchSupplierFrm.java</file>
+            <file>file:/D:/documents/code/git/CNPM-PTIT/Spa%20Management/src/view/user/LoginFrm.java</file>
+            <file>file:/D:/documents/code/git/CNPM-PTIT/Spa%20Management/src/view/importing/SearchMaterialFrm.java</file>
+            <file>file:/D:/documents/code/git/CNPM-PTIT/Spa%20Management/src/view/user/ManagerHomeFrm.java</file>
         </group>
     </open-files>
 </project-private>

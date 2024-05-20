@@ -29,7 +29,7 @@ public class InvoiceDAO extends DAO {
          */
         public boolean addInvoice(Invoice i) {
             String checkInvoice = "SELECT * FROM tblInvoice WHERE No = ? AND idSupplier = ?";
-            String addInvoice = "INSERT INTO tblInvoice (No, date, tax, paidAmount, idSupplier, idUser) VALUES (?, ?, ?, ?, ?, ?)";
+            String addInvoice = "INSERT INTO tblInvoice (No, date, tax, idSupplier, idUser) VALUES (?, ?, ?, ?, ?)";
             String addImportedMaterial = "INSERT INTO tblImportedMaterial (quantity, unitPrice, idMaterial, idInvoice) VALUES (?, ?, ?, ?)";
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
@@ -52,9 +52,8 @@ public class InvoiceDAO extends DAO {
                 ps.setString(1, i.getNo());
                 ps.setString(2, sdf.format(i.getDate()));
                 ps.setDouble(3, i.getTax());
-                ps.setDouble(4, i.getPaidAmount());
-                ps.setInt(5, i.getSupplier().getId());
-                ps.setInt(6, i.getBuyer().getId());
+                ps.setInt(4, i.getSupplier().getId());
+                ps.setInt(5, i.getBuyer().getId());
                 ps.executeUpdate();
 
                 // Get the id of the new invoice

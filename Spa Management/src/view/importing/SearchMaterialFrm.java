@@ -460,15 +460,32 @@ public class SearchMaterialFrm extends javax.swing.JFrame implements ActionListe
                     return;
                 }
                 int id = (int) tblMaterial.getValueAt(row, 0);
+                int rowId = -1;
                 boolean existed = false;
                 for (int i = 0; i < model.getRowCount(); i++) {
                     if ((int) model.getValueAt(i, 0) == id) {
+                        rowId = i;
                         existed = true;
                         break;
                     }
                 }
                 if (existed) {
-                    JOptionPane.showMessageDialog(this, "This material has already been imported");
+                    int newQuantity = (int) model.getValueAt(rowId, 2) + Integer.parseInt(quantity);
+                    double newUnitPrice = (double) model.getValueAt(rowId, 3);
+
+                    if(newUnitPrice != Double.parseDouble(unitPrice)){
+                        JOptionPane.showMessageDialog(this, "The unit price of the material is different from the previous one");
+                        return;
+                    }
+
+                    model.setValueAt(newQuantity, rowId, 2);
+                    model.setValueAt(newUnitPrice, rowId, 3);
+                    model.setValueAt(newQuantity * newUnitPrice, rowId, 4);
+                    tblImportedMaterial.setModel(model);
+                    ImportedMaterial im = importedMaterial.get(rowId);
+                    im.setQuantity(newQuantity);
+                    im.setUnitPrice(newUnitPrice);
+                    importedMaterial.set(rowId, im);
                 } else {
                     model.addRow(new Object[]{
                             tblMaterial.getValueAt(row, 0),

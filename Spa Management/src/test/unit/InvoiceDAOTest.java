@@ -37,7 +37,6 @@ public class InvoiceDAOTest {
         i.setNo("1236823");
         i.setDate(new Date());
         i.setTax(10);
-        i.setPaidAmount(1200000);
 
         User u = new User();
         u.setId(2);
@@ -86,7 +85,6 @@ public class InvoiceDAOTest {
         i.setNo("123");
         i.setDate(new Date());
         i.setTax(10);
-        i.setPaidAmount(1200000);
 
         User u = new User();
         u.setId(2);
@@ -135,7 +133,6 @@ public class InvoiceDAOTest {
         i.setNo("123");
         i.setDate(new Date());
         i.setTax(10);
-        i.setPaidAmount(1200000);
 
         User u = new User();
         u.setId(2);
@@ -184,7 +181,6 @@ public class InvoiceDAOTest {
         i.setNo("12345");
         i.setDate(new Date());
         i.setTax(10);
-        i.setPaidAmount(1200000);
 
         User u = new User();
         u.setId(2);
